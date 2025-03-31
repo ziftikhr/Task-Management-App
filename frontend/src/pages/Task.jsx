@@ -18,7 +18,8 @@ const Task = () => {
   const [formData, setFormData] = useState({
     description: "",
     dueDate: "",
-    status: false
+    status: false,
+    priority: "medium"
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -34,7 +35,8 @@ const Task = () => {
         setFormData({
           description: data.task.description,
           dueDate: data.task.dueDate.split("T")[0], // Formatting for date input
-          status: data.task.status
+          status: data.task.status,
+          priority: data.task.priority
         });
       });
     }
@@ -53,7 +55,8 @@ const Task = () => {
     setFormData({
       description: task.description,
       dueDate: task.dueDate.split("T")[0], // Reset formatted date
-      status: task.status
+      status: task.status,
+      priority: task.priority
     });
   };
 
@@ -106,6 +109,17 @@ const Task = () => {
                 <label htmlFor="dueDate">Due Date</label>
                 <Input type="date" name="dueDate" id="dueDate" value={formData.dueDate} onChange={handleChange} />
                 {fieldError("dueDate")}
+              </div>
+
+              {/* Priority Field */}
+              <div className="mb-4">
+                <label htmlFor="priority">Priority</label>
+                <select name="priority" id="priority" value={formData.priority} onChange={handleChange} className="block w-full p-2 border rounded">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+                {fieldError("priority")}
               </div>
 
               {/* Status Field */}

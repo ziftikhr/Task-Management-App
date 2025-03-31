@@ -89,6 +89,9 @@ const Tasks = () => {
                     <span className={`ml-4 font-medium ${task.status ? 'text-green-500' : 'text-red-500'}`}>
                       {task.status ? 'Completed' : 'Pending'}
                     </span>
+                    <span className={`ml-4 font-medium ${task.priority === 'high' ? 'text-red-500' : task.priority === 'medium' ? 'text-yellow-500' : 'text-green-500'}`}>
+                      Priority: {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                    </span>
                   </div>
                 </div>
               ))

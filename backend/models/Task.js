@@ -19,6 +19,11 @@ const taskSchema = new mongoose.Schema(
       type: Boolean,
       default: false, // false means not completed, true means completed
     },
+    priority: {
+      type: String,
+      enum: ["low", "medium", "high"],
+      default: "medium",
+    },
   },
   {
     timestamps: true,
