@@ -8,6 +8,8 @@ import Tooltip from './utils/Tooltip';
 const Tasks = () => {
   const authState = useSelector(state => state.authReducer);
   const [tasks, setTasks] = useState([]);
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterPriority, setFilterPriority] = useState('all');
   const [fetchData, { loading }] = useFetch();
 
   const fetchTasks = useCallback(() => {
@@ -36,16 +38,35 @@ const Tasks = () => {
     fetchData(config).then(() => fetchTasks());
   };
 
+  const filteredTasks = tasks.filter(task => 
+    (filterStatus === 'all' || (filterStatus === 'completed' ? task.status : !task.status)) &&
+    (filterPriority === 'all' || task.priority === filterPriority)
+  );
+
   return (
     <>
       <div className="my-2 mx-auto max-w-[700px] py-4">
-        {tasks.length !== 0 && <h2 className='my-2 ml-2 md:ml-0 text-xl'>Your tasks ({tasks.length})</h2>}
+        <div className="flex gap-4 mb-4">
+          <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="p-2 border rounded">
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+          <select value={filterPriority} onChange={e => setFilterPriority(e.target.value)} className="p-2 border rounded">
+            <option value="all">All Priorities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        {filteredTasks.length !== 0 && <h2 className='my-2 ml-2 md:ml-0 text-xl'>Your tasks ({filteredTasks.length})</h2>}
         
         {loading ? (
           <Loader />
         ) : (
           <div>
-            {tasks.length === 0 ? (
+            {filteredTasks.length === 0 ? (
               <div className='w-[600px] h-[300px] flex items-center justify-center gap-4'>
                 <span>No tasks found</span>
                 <Link to="/tasks/add" className="bg-blue-500 text-white hover:bg-blue-600 font-medium rounded-md px-4 py-2">
@@ -53,7 +74,7 @@ const Tasks = () => {
                 </Link>
               </div>
             ) : (
-              tasks.map((task, index) => (
+              filteredTasks.map((task, index) => (
                 <div key={task._id} className='bg-white my-4 p-4 text-gray-600 rounded-md shadow-md'>
                   <div className='flex items-center'>
 
