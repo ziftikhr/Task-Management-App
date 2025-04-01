@@ -15,4 +15,7 @@ npm run dev
 
 Go to http://localhost:3000
 
+Home page Screenshot
 ![image](https://github.com/user-attachments/assets/58321274-f309-4b76-9488-ad9967963c02)
+
+To see the admin role manually change the role of a user in the database to admin.
