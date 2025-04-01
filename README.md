@@ -14,3 +14,5 @@ Start the application
 npm run dev
 
 Go to http://localhost:3000
+
+![image](https://github.com/user-attachments/assets/58321274-f309-4b76-9488-ad9967963c02)
